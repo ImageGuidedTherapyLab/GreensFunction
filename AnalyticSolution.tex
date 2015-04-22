@@ -481,17 +481,21 @@ and spatially invariant solution.
 \begin{equation} \label{AssumedAnalyticForm}
 \begin{split}
  u(r,t) - u_a = 
+ \left(
+ \underbrace{
  \frac{u_h(r)}{r} +
  \frac{u_p(r)}{r}
+  }_{
+ \frac{u_{SS}(r)}{r}
+  }
+ \right)
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
 \\
  \dot{u}(r,t)  =  
- \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+ \frac{u_{SS}(r)}{r}  \exp(-\gamma^2 t)
 \\
  \Delta u(r,t)  = 
- \frac{u_h''(r)}{r} 
- +
- \frac{u_p''(r)}{r} 
+ \frac{u_{SS}''(r)}{r} 
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
 \end{split}
 \end{equation}
@@ -503,40 +507,35 @@ Notice this does not satisfy the bioheat equation.
  - \alpha \Delta u   
  +  \gamma^2 (u  - u_a )
   = 
-  \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+  \frac{u_{SS}(r)}{r}  \exp(-\gamma^2 t)
  & - 
   \alpha
   \left(
- \frac{u_p''(r)}{r} 
+ \frac{u_{SS}''(r)}{r} 
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
   \right)
   + 
   \gamma^2
   \left(
-  \frac{u_p(r)}{r} 
+  \frac{u_{SS}(r)}{r} 
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
   \right)
 \\
   = 
-   \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+   \frac{u_{SS}(r)}{r}  \exp(-\gamma^2 t)
  &+
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
  \underbrace{q_\text{laser}}_{
-  -\alpha \frac{u_p''(r)}{r} 
+  -\alpha \frac{u_{SS}''(r)}{r} 
   + \gamma^2
-  \frac{u_p(r)}{r} 
-  }
-  +
- \underbrace{0}_{
-  -\alpha \frac{u_h''(r)}{r} 
-  + \gamma^2
-  \frac{u_h(r)}{r} 
+  \frac{u_{SS}(r)}{r} 
   }
 \end{split}
 \]
 
 
-Coefficients of the homogeneous solution $C_1(t)$ and $C_2(t)$ also must vary with
+In general,
+coefficients of the homogeneous solution $C_1(t)$ and $C_2(t)$ also must vary with
 time to satisty the boundary conditions
 \[
  u(r_1,t) = u_0
@@ -564,6 +563,7 @@ time to satisty the boundary conditions
   C_2(t) \\
 \end{bmatrix}
 = 
+ \frac{ \gamma^2}{\left( 1 - \exp(-\gamma^2 t)\right)}
 \begin{bmatrix}
       u_0 - u_a - u_p(r_1)  
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
@@ -571,6 +571,38 @@ time to satisty the boundary conditions
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+\\
+\end{bmatrix}
+\]
+For the particular case, $u_0=u_a$, the boundary conditions are naturally
+satisfied and indepdendent of time.
+\[
+u_0=u_a \qquad \Rightarrow \qquad
+\begin{bmatrix}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  & 
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  \\
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+  & 
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+\end{bmatrix}
+\begin{bmatrix}
+  C_1 \\
+  C_2 \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+      - u_p(r_1)  
+   \\
+  - \left. \frac{d u_p}{dr} 
+  \right|_{r_2}
 \\
 \end{bmatrix}
 \]
