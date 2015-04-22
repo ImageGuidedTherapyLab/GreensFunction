@@ -1,0 +1,4 @@
+# ignore data files for github
+# git-svn clone --ignore-paths="^Processed" -r ...
+*.mat
+Processed*
