@@ -1,0 +1,908 @@
+%
+%  This simple example illustrates how documents can be
+%  split into smaller segments, each segment processed
+%  by latex2html separately.  This document can be
+%  processed through latex and latex2html with the
+%  corresponding makefile.
+%
+
+\documentclass{article}         % Must use LaTeX 2e
+\usepackage[plainpages=false, colorlinks=true, citecolor=black, filecolor=black, linkcolor=black, urlcolor=black]{hyperref}		
+\usepackage[left=.75in,right=.75in,top=.75in,bottom=.75in]{geometry}
+\usepackage{makeidx,color,boxedminipage}
+\usepackage{graphicx,float}
+\usepackage{amsmath,amsthm,amsfonts,amscd,amssymb} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Some math support.					     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	Theorem environments (these need the amsthm package)
+%
+%% \theoremstyle{plain} %% This is the default
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{ax}{Axiom}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}[section]
+\newtheorem*{notation}{Notation}
+\newtheorem*{exrcs}{Exercise}
+\newtheorem*{exmple}{Example}
+
+%\numberwithin{equation}{section}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Macros.							     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%	Here some macros that are needed in this document:
+
+\newcommand{\motion}{\mathbf{\varphi}}
+\newcommand{\hmotion}{\mbox{\boldmath $\hat{\varphi}$}}
+\newcommand{\cauchy}{\mbox{\boldmath $\sigma$}}
+\newcommand{\eqn}[1]{(\ref{#1})}
+\newcommand{\hOmega}{\hat{\Omega}}
+\newcommand{\homega}{\hat{\omega}}
+\newcommand{\nphalf}{n+\frac{1}{2}}
+\newcommand{\nmhalf}{n-\frac{1}{2}}
+\newcommand{\kmhalf}{k-\frac{1}{2}}
+\newcommand{\kphalf}{k+\frac{1}{2}}
+\newcommand{\picdir}{pdffig}
+
+\begin{document}                % The start of the document
+
+The governing equations for LITT are derived from Pennes bioheat
+equation coupled with a source term provided by laser tissue
+interaction. 
+\begin{equation} \label{BioheatPDE}
+  \partial u_t   
+ -\nabla \cdot  (   \alpha \nabla u  ) 
+ + \frac{\omega c_\textit{blood}}{\rho c_p} (u  - u_a )
+ = \frac{1}{\rho c_p} \; q_{laser}
+     \qquad \text{in } U \backslash U_{tip}
+\end{equation}
+\[
+   q_{laser}(x,t)  = 
+    \int_{U_{tip}}
+ \frac{p(t) \mu_\textit{eff}^2}{\text{Vol}(U_{tip}) }  
+   \frac{ \exp(-\mu_\textit{eff} \| x -{ \xi}\|) }
+      {4\pi \| x-{ \xi}\|} \; d\xi
+   \quad   x \in U \backslash U_{tip}
+\]
+\[
+  \alpha  = \frac{k}{\rho c_p}
+\quad
+  \mu_{eff}  = \sqrt{ 3 {\mu_a} \mu_{tr} }
+\quad
+ \mu_{tr} = \mu_a  + \mu_s (1-g)
+\]
+\[
+n \cdot ( \alpha \nabla u  )  = 0 
+                       \qquad \text{on } \partial U
+\qquad
+n \cdot ( \alpha \nabla u  )  = h (u - u_\textit{cooling}) 
+                       \qquad \text{on } \partial U_\textit{tip}
+\]
+
+Previous sensitivity analysis have indicated that uncertainty in 
+the optical parameters, $ \omega < k < \mu_\text{eff}$, 
+provide the largest affect on the final temperature prediction outcomes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analytic Steady State Solution}\label{AnalyticBioheatModel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A 1D spherically symmetric radial decomposition 
+of the solution,
+$u(r)~-~u_a~=~\frac{\mathcal{R}(r)}{r}$, simplifies the analysis of the differential operator in
+spherical coordinates.
+\[
+    \frac{\omega c_\textit{blood}}{\rho c_p}  \frac{ \mathcal{R}(r)}{r} 
+   -
+    \frac{\alpha }{r}   \frac{d^2 \mathcal{R}}{dr^2}
+   = 
+    \frac{\mu_\textit{eff}^2 \;  P}{ \; \rho c_p}   
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
+\]
+\[
+   u(r_1) = u_0
+  \qquad
+  \left. \frac{d u}{dr} \right|_{r_2}  = 0
+  \qquad
+   r_1 < r_2
+\]
+Constant coeffients are assumed. A 1D spherically symmetric radial decomposition 
+of the solution
+simplifies the analysis of the differential operator in spherical coordinates.
+A particular solution, $u_p$, will be used to construct a solution. 
+\[
+ -\Delta  \frac{u_p(r)}{r} 
+ + \frac{\omega c_\text{blood}}{k}  \frac{u_p(r)}{r} 
+ = \frac{1}{k} \; q_{laser}
+\qquad
+\qquad
+  \frac{u_p(r)}{r}  = 
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+\]
+Notice that in spherical coordinates
+\[
+  \frac{d}{dr}  \frac{u_p(r)}{r} 
+   = 
+    \frac{u_p'(r)}{r}  - \frac{u_p(r)}{r^2}   
+  \qquad
+  \qquad
+ \Delta  \frac{u_p(r)}{r} 
+   = 
+  \frac{1}{r^2} 
+  \frac{d}{dr} \left( r^2 \frac{u_p(r)}{r}  \right)
+   = 
+    \frac{u_p''(r)}{r} 
+\]
+%FIXME { \color{red} May also consider Robin BC 
+%\[
+%  \left. k  \frac{d u}{dr} \right|_{r_1}  = h (u - u_\infty) 
+%\]
+%} 
+From classical theory~\cite{boyce1992elementary}, 
+the general solution is the linear combination of the homogeneous solution, $u_h$, and
+a particular solution, 
+$ u_p = \frac{1}{r} \left( A \exp (-\mu_\textit{eff} \; r) + B \; r \;  \exp
+(-\mu_\textit{eff} \; r) \right) $.
+In this case, the particular solution was obtained from the method of undetermined
+coefficients for $A,B \in \mathbb{R}$. 
+\begin{equation}\label{OneDSolution}
+u = 
+  \underbrace{
+    C_1 \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  + 
+    C_2 \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+    }_{u_h}
+  + 
+  \underbrace{
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
+    }_{u_p}
+  + 
+    u_a
+\end{equation}
+The boundary conditions are used to determine the coefficients of the homogeneous solution.
+Applicator cooling is specified by the boundary condition at $r = r_1$.
+The domain is assumed large enough that no heat flux is observed at the far boundary $r = r_2$.
+\[
+\begin{bmatrix}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  & 
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  \\
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+  & 
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+\end{bmatrix}
+\begin{bmatrix}
+  C_1 \\
+  C_2 \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+      u_0 - u_p(r_1) - u_a    \\
+  - \left. \frac{d u_p}{dr} 
+  \right|_{r_2}\\
+\end{bmatrix}
+\]
+%The 1D solution provides an estimate of the heating from a single point source
+%with applicator boundary at $r_1$. The Symbolic Toolbox of MATLAB was used to determine
+%and verify all coefficients and \verb#ccode# was used to write out the kernel.
+%Similar analytical solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
+The 1D solution provides an estimate of the heating from a single point source
+with applicator boundary at $r_1$. Mathematica 7 (Wolfram, Champaign, IL) was used
+to determine and verify all coefficients. Then, \verb#ccode# was used to write out the kernel.
+Similar analytical solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
+%FIXME \text{ \color{red} (Do we get the same result ?) } 
+Heating caused by the cylindrical geometry of the diffusing tip was modeled as
+evenly distributed point sources, $M = 10$, along the axial dimension of the
+applicator at positions $r_{0_i}$. 
+\begin{equation}\label{GreenSuperPosition}
+  u = \sum_{i=1}^M u_h( r-r_{0_i}) + u_p( r-r_{0_i})
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Steady State Sensitivity}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The sensitivity of the solution to the optical properties, $\frac{\partial
+u}{\partial \mu_\text{eff}}$ is also of
+interest.
+Sensitivities are obtain through chain rule differentiation of the governing
+PDE.
+\[
+\frac{\partial}{\partial \mu_\text{eff}}
+\left[
+ -\nabla \cdot \left(   \alpha \nabla u  \right) 
+ + \frac{\omega c_\textit{blood}}{\rho c_p} (u  - u_a )
+ = \frac{1}{\rho c_p} \; q_{laser}
+\right]
+\qquad
+\Rightarrow
+\qquad
+ -\nabla \cdot  \left(   \alpha \nabla  \frac{\partial u}{\partial \mu_\text{eff}} \right) 
+ + \frac{\omega c_\textit{blood}}{\rho c_p} \frac{\partial u}{\partial \mu_\text{eff}}  
+ = \frac{1}{\rho c_p} \;
+   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
+\]
+\[ \begin{split}
+   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
+   = 
+   \frac{\partial }{\partial \mu_\text{eff}}
+   \left(
+    \mu_\textit{eff}^2 \;  P
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
+   \right)
+ & = 
+   2 \; \mu_\textit{eff} \;  P
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
+   + 
+    \mu_\textit{eff}^2 \;  P
+    \left(-r\right) \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
+ \\
+ & = 
+    \mu_\textit{eff} \;  P
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 2 \; \pi \; r}
+   - 
+    \mu_\textit{eff}^2 \;  P
+                    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi }
+ \end{split}
+\]
+% \frac{\partial u}{\partial \mu_\text{eff}}  
+Assuming constant coefficients, 
+a 1D spherically symmetric radial decomposition 
+of the solution,
+$ \frac{\partial u}{\partial \mu_\text{eff}} = \frac{\mathcal{R}(r)}{r}$, again simplifies the analysis of the differential operator in
+spherical coordinates.
+\[
+   L \left[\frac{\partial u}{\partial \mu_\text{eff}}\right] = 
+    \frac{\omega c_\textit{blood}}{\rho c_p}  \frac{ \mathcal{R}(r)}{r} 
+   -
+    \frac{\alpha }{r}   \frac{d^2 \mathcal{R}}{dr^2}
+   = 
+    \frac{\mu_\textit{eff} \;  P }{ 2 \; \pi \; \rho c_p}   
+    \left(
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{  r}
+   - 
+    \frac{ \mu_\textit{eff} \exp \left(-\mu_\textit{eff} \; r \right) }{ 2 }
+    \right)
+\]
+\[
+ \left.
+ \frac{\partial u}{\partial \mu_\text{eff}} 
+  \right|_{r_1}
+ \frac{\partial u_0}{\partial \mu_\text{eff}} = 0
+  \qquad
+  \left. \frac{\partial }{\partial \mu_\text{eff}}
+   \frac{d u}{dr} \right|_{r_2}  = 0
+  \qquad
+   r_1 < r_2
+\]
+From classical theory~\cite{boyce1992elementary}, 
+the general solution is the linear combination of the homogeneous solution and
+a particular solution. 
+\[
+ \frac{\partial u}{\partial \mu_\text{eff}} = 
+  \frac{1}{r}
+   \left(
+  u_h(r)+ 
+ \underbrace{
+\frac{\mu_\textit{eff} \;  P }{ 2 \; \pi \; \rho c_p}  
+\left( u_{p_1} - u_{p_2} \right) 
+ }_{\equiv u_p}
+ \right)
+\]
+We will construct a solution using the linearity of the operator, $L$.
+\[
+  L \left[\frac{u_h}{r} \right] =  0 
+  \qquad
+  L \left[\frac{u_{p_1}}{r} \right] = 
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{  r}
+  \qquad
+  L \left[\frac{u_{p_2}}{r} \right] = 
+    \frac{ \mu_\textit{eff} \exp \left(-\mu_\textit{eff} \; r \right) }{ 2 }
+   \qquad
+\]
+\[
+  L \left[ \frac{\partial u}{\partial \mu_\text{eff}}\right]= 
+    \frac{\mu_\textit{eff} \;  P }{ 2 \; \pi \; \rho c_p}   
+    \left(
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{  r}
+   - 
+    \frac{ \mu_\textit{eff} \exp \left(-\mu_\textit{eff} \; r \right) }{ 2 }
+    \right)
+\]
+\[
+ -\Delta  \frac{u_p(r)}{r} 
+ + \frac{\omega c_\text{blood}}{k}  \frac{u_p(r)}{r} 
+ = \frac{1}{k} \; q_{laser}
+\qquad
+\qquad
+  \frac{u_p(r)}{r}  = 
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+\]
+%FIXME { \color{red} May also consider Robin BC 
+%\[
+%  \left. k  \frac{d u}{dr} \right|_{r_1}  = h (u - u_\infty) 
+%\]
+%} 
+The particular solution $u_{p_1}$ may be obtain from the
+method of undetermined coefficients.
+\[
+  L \left[\frac{u_{p_1}}{r} \right] = 
+ -\Delta  \frac{u_{p_1}(r)}{r} 
+ + \frac{\omega c_\text{blood}}{k}  \frac{u_{p_1}(r)}{r} 
+ = 
+    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{  r}
+\qquad
+\qquad
+  \frac{u_{p_1}(r)}{r}  = 
+    \frac{\exp \left(-\mu_\text{eff} \; r \right) }
+         { r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+\qquad
+\text{\color{red} double check}
+\]
+The particular solution $u_{p_2}$ may be obtain from 
+\[
+  L \left[\frac{u_{p_2}}{r} \right] = 
+ -\Delta  \frac{u_{p_2}(r)}{r} 
+ + \frac{\omega c_\text{blood}}{k}  \frac{u_{p_2}(r)}{r} 
+ = 
+    \frac{ \mu_\textit{eff} \exp \left(-\mu_\textit{eff} \; r \right) }{ 2 }
+\qquad
+\qquad
+  \frac{u_{p_2}(r)}{r}  =  
+\text{\color{red} ?}
+\]
+As before, the homogeneous coefficients, $C_1, C_2$ must be determined from the 
+boundary conditions.
+\[
+  L \left[\frac{u_h}{r} \right] =   
+ L\left[
+    C_1 \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  + 
+    C_2 \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+\right]
+  = 0
+\]
+\[
+\begin{bmatrix}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  & 
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
+  \\
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+  & 
+  \left.
+   \frac{d}{dr}
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
+  \right|_{r_2}
+\end{bmatrix}
+\begin{bmatrix}
+  C_1 \\
+  C_2 \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+       - u_p(r_1)     \\
+  - \left. \frac{d u_p}{dr} 
+  \right|_{r_2}\\
+\end{bmatrix}
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Transient Analytic Solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A simplified analytic solution of the Pennes bioheat equation 
+may also be considered as a surrogate model for the therapy planning.
+\begin{equation} \label{TransientAnalytic}
+  \frac{1}{\alpha}
+  \partial u_t   
+ -\Delta u   
+ + \frac{\omega c_\text{blood}}{k} (u  - u_a )
+ = \frac{1}{k} \; q_{laser}
+     \qquad \text{in } U \backslash U_{tip}
+\end{equation}
+\[
+  \left. k  \frac{d u}{dr} \right|_{r_1}  = h (u - u_\infty) 
+  \qquad
+  \left. \frac{d u}{dr} \right|_{r_2}  = 0
+  \qquad
+   r_1 < r_2
+  \qquad
+  \qquad
+   u(r,0) = u_0
+\]
+The analytical form of the separation of variables chosen anticipates the
+approaching a steady state solution.
+\begin{equation} \label{AssumedAnalyticForm}
+\begin{split}
+ u(r,t) - u_a = T(t) \frac{u_h(r)}{r} + \frac{u_p(r)}{r} 
+\\
+ \dot{u}(r,t)  = \dot{T}(t) \frac{u_h(r)}{r}
+\\
+ \Delta u(r,t)  = T(t) \frac{u_h''(r)}{r }+ \frac{u_p''(r)}{r} 
+\end{split}
+\end{equation}
+Substituting \eqn{AssumedAnalyticForm} in \eqn{BioheatPDE}
+\[
+  \frac{1}{\alpha}
+  \dot{T}(t) \frac{u_h(r)}{r}
+ -
+ T(t) \frac{u_h''(r)}{r }
+ + \frac{\omega c_\text{blood}}{k} 
+  T(t) \frac{u_h(r)}{r} 
+ = 0
+\]
+Following the classical separation of variable approach
+\[
+  \frac{\dot{T}(t)}{\alpha T(t)}
+   =
+  \frac{u_h''(r)
+       - \frac{\omega c_\text{blood}}{k} u_h(r) 
+       }{u_h(r) }
+   =
+   - \lambda
+\]
+yeilds two ODE's.
+\[
+  \dot{T}(t)+ \lambda \alpha T(t)  = 0 
+   \qquad \Rightarrow \qquad
+   T(t)  = C_0 \exp\left( -\lambda \alpha t \right)
+\]
+\[
+  u_h''(r) + ( \lambda - \frac{\omega c_\text{blood}}{k} )  u_h(r)  = 0 
+   \qquad \Rightarrow \qquad
+  u_h(r)   = C_1 \sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r
+           + C_2 \cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r
+\]
+
+The initial conditions and boundary conditions are used to determine the coefficients of the homogenious solution.
+Applicator cooling is specified by the boundary condition at $r = r_1$.
+The domain is assumed large enough that no heat flux is observed at the far boundary $r = r_2$.
+\[
+ u(r,0) - u_a = T(0) \frac{u_h(r)}{r} + \frac{u_p(r)}{r}  = u_0
+\]
+\[
+T(t)
+\begin{bmatrix}
+  \left.
+   \frac{d}{dr}
+    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  \right|_{r_1}
+    - \frac{h}{k} 
+    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  & 
+  \left.
+   \frac{d}{dr}
+    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  \right|_{r_1}
+    - \frac{h}{k} 
+    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  \\
+  \left.
+   \frac{d}{dr}
+    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  \right|_{r_2}
+  & 
+  \left.
+   \frac{d}{dr}
+    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+  \right|_{r_2}
+  \\
+\end{bmatrix}
+\begin{bmatrix}
+  C_1 \\
+  C_2 \\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+  \frac{h}{k} (u_p(r_1) - u_a  - u_\infty)       
+  - \left. \frac{d u_p}{dr} 
+  \right|_{r_1}\\
+  - \left. \frac{d u_p}{dr} 
+  \right|_{r_2}\\
+\end{bmatrix}
+\]
+{\color{red} The time function $T(t)$ is differenct than the classical
+approach. In this case the coefficients $C_1(t)$ and $C_2(t)$ depend on
+time.} 
+Heating caused by the cylindrical geometry of the diffusing tip was modeled as
+evenly distributed point sources, $N=10$, along the axial dimension of the
+applicator at positions $r_{0_i}$. 
+\begin{equation}\label{GreenSuperPosition}
+  u = \sum_{i=1}^N u_h( r-r_{0_i}) + u_p( r-r_{0_i})
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{PC Expansion Selection }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A Karhunen Loeve decomposition of the uncertain parameters is assumed.
+The parameters are written as a linear combination of random perturbations 
+around a mean function. $(Z_1,Z_2,...Z_d)$ are assumed \textit{mutually
+independent} random variables with
+known probability distributions, ie $Z_k = \mathcal{N}(m_k,\sigma_k)$ or $Z_k = \mathcal{U}(a_k,b_k)$,
+\[
+\begin{split}
+k = k_0(x) + \sum_{k=1}^d k_k(x)  Z_k
+\\
+\omega = \omega_0(x) + \sum_{k=1}^d \omega_k(x)  Z_k
+\\
+q = q_0(x) + \sum_{k=1}^d q_k(x)  Z_k
+\end{split}
+\]
+Following polynomial chaos theory,
+the solution to \eqn{BaseModelOverview} may be approximated in terms of
+a basis of orthogonal polynomials truncated at order $N$
+\[
+u(x,t,Z)  \approx  \sum_k^M u_k(x,t) \Phi_k(Z)
+\qquad
+M = 
+\left(
+\begin{split}
+N & + d
+\\
+  & d
+\end{split}
+\right)
+\qquad
+\mathbb{E} \left[ \Phi_i (Z) \Phi_j(Z)\right] 
+= 
+\int  \Phi_i (z) \Phi_j(z) \rho(z) dz
+= 
+\delta_{ij}
+\]
+Where $\Phi_i$ are Hermite or Legendre polynomials for
+Gaussian/Uniform random variables, respectively.
+Given this expansion, statistics of the temperature field
+are accessible using the orthogonality of the basis functions
+\[
+m(x) =  E[u(x)] = E[u(x) \Phi_0(Z)] = u_0(x)
+\qquad
+\Phi_0(Z) = 1
+\]
+\[
+k(x,x') = E[ (u(x)-m(x)) (u(x')-m(x')) ] = \sum_{k=1}^M u_k(x) u_k(x')
+\]
+Various numerical approaches, $N_i$, are available to compute 
+the probability distribution of the QOI. Each \textit{numerical method}
+has tradeoffs in terms of computational expense, but in theory
+should converge to the exact solution of \eqn{BaseModelOverview}.
+\[
+\begin{split}
+\text{N}_1:  \qquad &
+\text{Intrusive Galerkin}
+\\
+\text{N}_2:  \qquad &
+\text{Collocation}
+\\
+\text{N}_3: \qquad &
+\text{MCMC}
+\end{split}
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Gaussian Process Approximation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Alternatively, consider the case where the Karhunen Loeve
+expansion is given in  terms of 
+\textit{mutually independent} Gaussian random variables
+$(Z_1,Z_2,...Z_d)$, $Z_k = \mathcal{N}(m_k,\sigma_k)$.
+In this case we will formulate a surrogate model $M_2$
+for the base model, $M_1$ \eqn{BaseModelOverview}, presented above.
+\textit{Note, that as opposed to the different numerical methods $N_1$,
+$N_2$, and $N_3$, the surrogate model $M_2$ is NOT expect to converge to
+a solution of the base model $M_1$ and is justified as calling a 'new'
+model.}
+\[
+\begin{split}
+\text{M}_1:  \qquad &
+\text{Non-Gaussian Statistics}
+\\
+\text{M}_2: \qquad &
+\text{GP}
+\end{split}
+\]
+The model may be written as the usual linear system, $Lu=q_0$, plus 
+a non-Gaussian residual, $r(u)$.
+\[
+  \underbrace{
+  -\nabla \cdot ( k_0(\textbf{x}) \nabla u) 
+  + \omega_0(\textbf{x}) c_{blood} (u - u_a )
+}_{L u}
+ = q_0(\textbf{x},t) 
+  - 
+  \underbrace{
+     \sum_{k=1}^d 
+    \left(
+        -\nabla \cdot ( k_k(\textbf{x})Z_k  \nabla u) 
+        + \omega_k(\textbf{x}) Z_K  c_{blood} (u - u_a )
+        - q_k(x) Z_k 
+    \right)
+              }_{r(u)}
+\]
+As a surrogate model,
+classical literature typically assumes that the residual $r(u)$ is too
+expensive to compute and models the residual as a projection onto the
+Gaussian Basis.  
+\[
+\epsilon = \sum_{k=1}^d \epsilon_k Z_k
+\qquad
+\|r(u) - \epsilon \| = \inf_{g \in V} \|r(u) - g\|
+\qquad
+\Phi_0(Z) = 1,
+\Phi_1(Z) = Z_1,
+\Phi_2(Z) = Z_2,...,
+\Phi_d(Z) = Z_d
+\]
+\[
+V \equiv \left\{ f: E[f^2] < \infty \right\}
+\]
+Under the Gaussian process assumption, the solution
+may be expressed in a similar form
+\[
+u = u_0 + \sum_{k=1}^d u_k Z_k
+\]
+By direct substitution and using the orthogonality of the Gaussian basis
+a system of uncoupled equations may be derived that involves the usual
+deterministic solution plus terms that provide for the Gaussian
+fluctuations.
+\[
+E\left[
+\left(
+L \left[u_0 + \sum_{k=1}^d u_k Z_k\right]
+ =
+q_0 + \sum_{k=1}^d \epsilon_k Z_k
+\right)
+\Phi_k
+\right]
+\qquad
+k = 0,...,d
+\]
+\[
+L u_0 = q 
+\qquad
+L u_k = \epsilon_k 
+\qquad k = 1, ..., d
+\]
+The mean and covariance of the Gaussian field are thus
+\[
+m(x) =  E[u(x)] = E[u(x) \Phi_0(Z)] = u_0(x)
+\qquad
+\Phi_0(Z) = 1
+\]
+\[
+k(x,x') = E[ (u(x)-m(x)) (u(x')-m(x')) ] = \sum_{k=1}^M u_k(x) u_k(x')
+\]
+Thermal conduction and perfusion appear as \textit{hyper-parameters}
+in the covariance function.
+Further,
+the marginal likelihood of this approach is analytic
+and may be used for model selection of dominant covariance terms.
+\[
+p(D|M_k) = 
+ - \underbrace{\frac{1}{2} y^\top K_y^{-1} y }_\text{data fit} -
+\underbrace{\frac{1}{2} |K_y|}_\text{complexity}
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Classical and Low Rank Approximations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Classically, the modeling errors are typically 
+taken as a Dirac delta functional at a particular point in space (or
+finite element node) and the solution is the corresponding fundamental
+solution, $G(x,x_k)$
+\[
+L u_k = \epsilon_k  = \delta(x - x_k)
+\quad k = 1, ..., d
+\qquad
+\Rightarrow
+\qquad
+u_k = G(x,x_k)
+\]
+Under these assumptions,
+an analytical form for the mean and covariance may be derived
+(See Rasmussen 2006, eqn 4.13).
+\begin{equation} \label{PhysicsBasedCovarianceFunction}
+m(x) = \int_0^t \int_D \Phi(x-y,t-s) Q_\text{laser}(y,s) dy ds
+\quad
+k(x,x') = \sum_{k=1}^M  G(x,x_k) G(x',x_k)
+\end{equation}
+\paragraph{Low Rank Approximation} 
+Low rank approximations of the covariance lead to efficient FMM methods~\cite{fong2009black}.
+As a low rank approximation
+the solution may be understood as a single constant perturbation to the temperature
+field.
+\[
+L \left[u_0 + u_1 Z_1\right]
+= 
+q_0 +  \epsilon Z_1
+\qquad 
+\epsilon \in \mathbb{R}
+\]
+Two linear system solves are needed
+\[
+L u_0 = q 
+\qquad
+L u_1 = \epsilon 
+\]
+\textbf{Notice in spherical coordinates that an analytic form for the low
+rank covariance may also be derived. IE solve pde for constant right hand
+side and get analytic expression for $u_1$.}
+\[
+k(x,x') = u_1(x) u_1(x')
+\]
+The covariance kernel will be in terms of $\rho$, $k$, and $\omega$, NOT
+$\mu_\text{eff}$
+\paragraph{Residual Low Rank Approximation} 
+As a low rank approximation
+the solution may be understood as a potential nonlinear perturbation, 
+due to Arrhenius damage, $\Omega$, to the temperature
+field resulting from each term in the residual.
+\[
+ k(x)      =      k_0(x) + \delta    k(x,\Omega)   Z_1
+     \qquad
+ \omega(x) = \omega_0(x) + \delta \omega(x,\Omega) Z_2
+     \qquad
+ q(x)      =      q_0(x) + \delta    q(x,\Omega)   Z_3
+\]
+\[
+L \left[u_0 + u_1 Z_1 + u_2 Z_2 + u_3 Z_3\right]
+= 
+q_0 
+ \underbrace{
+    + \underbrace{\nabla \cdot ( \delta k(x,\Omega)  \nabla u_0) }_{ \epsilon_1 }Z_1
+    - \underbrace{\delta \omega(x,\Omega) c_{blood} (u_0 - u_a ) }_{ \epsilon_2 }Z_2
+    + \underbrace{                \delta   q(x,\Omega)           }_{ \epsilon_3 }Z_3
+            }_{r(u_0)}
+\]
+The approximate residual is bounded by
+\[
+   \|r(u_0) - r(u)\|  \quad < \quad  ???
+\]
+Four linear system solves are needed
+\[
+L u_0 = q 
+\qquad
+L u_1 = \nabla \cdot ( \delta k(x,\Omega)  \nabla u_0) 
+\qquad
+L u_2 =-\delta \omega(x,\Omega) c_{blood} (u_0 - u_a ) 
+\qquad
+L u_3 =                   \delta q(x,\Omega)                    
+\]
+Notice that the covariance includes the contributions from \textbf{MEAN AND UNCERTAINTIES}
+in the thermal conduction, perfusion, and optical properties directly as
+hyperparameters
+\[
+k(x,x') = u_1(x) u_1(x') + u_2(x) u_2(x') + u_3(x) u_3(x') 
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{FMM and Fast Gauss Transform}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Consider using FMM \texttt{http://www.bu.edu/exafmm/} for each solve.
+Each prediction estimate involves solution to a linear system of equations
+of the form
+\[
+   K x= y
+\]
+The variance for each point requires the linear system solve with multiple
+RHS (=N)
+\[
+  K X = B
+\]
+The underlying correlation function is the form of a summation of
+Fundamental solutions~\eqn{PhysicsBasedCovarianceFunction}.
+\[
+  k(x,x') = \sum_{k=1}^M  G(x,x_k) G(x',x_k)
+\]
+or low rank approximation
+\[
+  k(x,x') = u_1(x) u_1(x')
+\]
+The matrix vector multiply is of a form suitable for multipole expansion 
+\[
+f(x) =  \sum_{i=1}^N c_i k(x,x_i) 
+ \underbrace{\; = \;}_\text{FMM}
+     \sum_{k=1}^M  G(x,x_k) \sum_{i=1}^N c_i  G(x_i,x_k)
+\]
+or low rank expansion~\cite{fong2009black}, ie $M << N$.
+\[
+f(x) =  \sum_{i=1}^N c_i k(x,x_i) 
+ \underbrace{\; = \;}_\text{FMM}
+     \sum_{k=1}^M  u_k(x) \sum_{i=1}^N c_i  u_k(x_i)
+\]
+As opposed to the Chebyshev approximation of~\cite{fong2009black},
+the matrix vector product of the FMM expansion is approximation with the
+FEM, SEM, or BEM basis used for $u_1$.
+
+For Gaussian kernels a Fast Gauss transform exists \cite{yang2005efficient}.
+
+
+Implementations may be found at:
+\texttt{http://www.umiacs.umd.edu/labs/cvl/pirl/vikas/Software/IFGT/IFGT\_code.htm}
+
+A good preconditioner is needed for the $\mathcal{O}(N)$ linear
+system solves needed, Section~\ref{MultipleRHS}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{}
+\bibitem[Carp 2004]{carp2004rtd}
+Carp, S.A. and Prahl, S.A. and Venugopalan, V.
+\newblock {Radiative transport in the delta-[bold P] approximation: accuracy of fluence rate and optical penetration depth predictions in turbid semi-infinite media}. 
+\newblock Journal of Biomedical Optics
+
+\bibitem[Modest 2003]{Modest2003}
+M. Modest 
+\newblock {\em Radiative Heat Transfer}.
+\newblock New York: Academic Press, 2003.
+
+\bibitem[Welch 1995]{Welch95}
+A.~J. Welch and M.~J.~C. van Gemert.
+\newblock {\em Optical-Thermal Response of Laser-Irradiated Tissue}.
+\newblock New York: Plenum Press, 1995.
+
+\bibitem[Fasano 2010]{Fasano2010}
+Fasano, A. and H{\"o}mberg, D. and Naumov, D.
+\newblock {On a mathematical model for laser-induced thermotherapy}.
+\newblock Applied Mathematical Modelling 2010
+
+\bibitem[Fong and Darve, 2009]{fong2009black}
+Fong, W. and Darve, E. (2009).
+\newblock The black-box fast multipole method.
+\newblock {\em Journal of Computational Physics}, 228(23):8712--8725.
+
+\bibitem[Yang et~al., 2005]{yang2005efficient}
+Yang, C., Duraiswami, R., and Davis, L.~S. (2005).
+\newblock Efficient kernel machines using the improved fast gauss transform.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1561--1568.
+
+\bibitem{boyce1992elementary}
+William~E Boyce, Richard~C DiPrima, and Charles~W Haines.
+\newblock {\em Elementary differential equations and boundary value problems},
+  volume~9.
+\newblock Wiley New York, 1992.
+
+\bibitem{Giordano2010}
+Mauricio~a Giordano, Gustavo Gutierrez, and Carlos Rinaldi.
+\newblock {Fundamental solutions to the bioheat equation and their application
+  to magnetic fluid hyperthermia.}
+\newblock {\em International journal of hyperthermia : the official journal of
+  European Society for Hyperthermic Oncology, North American Hyperthermia
+  Group}, 26(5):475--84, January 2010.
+
+\bibitem{Vyas1992}
+Reeta Vyas.
+\newblock {Green’s function solution to the tissue bioheat equation}.
+\newblock {\em Medical Physics}, 19(5):1319, 1992.
+
+\bibitem{Deng2002}
+Zhong-Shan Deng and Jing Liu.
+\newblock {Analytical Study on Bioheat Transfer Problems with Spatial or
+  Transient Heating on Skin Surface or Inside Biological Bodies}.
+\newblock {\em Journal of Biomechanical Engineering}, 124(6):638, 2002.
+
+\end{thebibliography}
+
+\end{document}
