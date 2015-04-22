@@ -33,3 +33,5 @@ steadyStatePennesLaser.ptx:   steadyStatePennesLaser.cu
 tags:
 	ctags -R  --langmap=c++:+.cu $(MATLABROOT) . 
 
+doc:
+	pdflatex AnalyticSolution.tex
