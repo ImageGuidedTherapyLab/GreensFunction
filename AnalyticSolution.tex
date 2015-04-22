@@ -204,10 +204,6 @@ The domain is assumed large enough that no heat flux is observed at the far boun
   \right|_{r_2}\\
 \end{bmatrix}
 \]
-%The 1D solution provides an estimate of the heating from a single point source
-%with applicator boundary at $r_1$. The Symbolic Toolbox of MATLAB was used to determine
-%and verify all coefficients and \verb#ccode# was used to write out the kernel.
-%Similar analytical solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
 The 1D solution provides an estimate of the heating from a single point source
 with applicator boundary at $r_1$. Mathematica 7 (Wolfram, Champaign, IL) was used
 to determine and verify all coefficients. Then, \verb#ccode# was used to write out the kernel.
@@ -337,17 +333,36 @@ We will construct a solution using the linearity of the operator, $L$.
 %% \qquad
 %% \text{\color{red} double check}
 %% \]
-The particular solution $u_p$ may be obtain from 
+The particular solution $u_p$ may be obtain from the previous particular
+solution.
+\[
+  L \left[
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \right] =q_{laser} 
+\]
+Fubini theorem is used to interchange order of differentiation.
 \[
 \begin{split}
-  L \left[\frac{u_p}{r} \right] = 
- -\Delta  \frac{u_p(r)}{r} 
- + \frac{\omega c_\text{blood}}{k}  \frac{u_p(r)}{r} 
- = 
+    \frac{\partial }{\partial \mu_\text{eff}}
+  L \left[
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \right] 
+  & \underbrace{
+   = 
+  }_\text{Fubini}
+  L \left[
+    \frac{\partial }{\partial \mu_\text{eff}}
+   \left(
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+   \right)
+   \right] 
+\\
+  &  =
     \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
-   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
- &  = 
-   \frac{\partial }{\partial \mu_\text{eff}}
+    = \frac{\partial }{\partial \mu_\text{eff}}
    \left(
     \mu_\textit{eff}^2 \;  P
     \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
@@ -366,13 +381,18 @@ The particular solution $u_p$ may be obtain from
    - 
     \mu_\textit{eff}^2 \;  P
                     \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi }
- \end{split}
+\end{split}
+\]
+\[
+  \frac{u_p(r)}{r} = 
+    \frac{\partial }{\partial \mu_\text{eff}}
+   \left(
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+   \right)
+   = \text{\color{red}?}
 \]
 % \frac{\partial u}{\partial \mu_\text{eff}}  
-\[
-  \frac{u_p(r)}{r}  =  
-\text{\color{red} ?}
-\]
 As before, the homogeneous coefficients, $C_1, C_2$ must be determined from the 
 boundary conditions.
 \[
@@ -415,126 +435,145 @@ boundary conditions.
 \section{Transient Analytic Solution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A simplified analytic solution of the Pennes bioheat equation 
-may also be considered as a surrogate model for the therapy planning.
-\begin{equation} \label{TransientAnalytic}
-  \frac{1}{\alpha}
-  \partial u_t   
- -\Delta u   
- + \frac{\omega c_\text{blood}}{k} (u  - u_a )
- = \frac{1}{k} \; q_{laser}
-     \qquad \text{in } U \backslash U_{tip}
-\end{equation}
+An an approximate transient solution, consider the spatially independent
+solution of \cite{Giordano2010}.
 \[
-  \left. k  \frac{d u}{dr} \right|_{r_1}  = h (u - u_\infty) 
-  \qquad
-  \left. \frac{d u}{dr} \right|_{r_2}  = 0
-  \qquad
-   r_1 < r_2
-  \qquad
-  \qquad
-   u(r,0) = u_0
-\]
-The analytical form of the separation of variables chosen anticipates the
-approaching a steady state solution.
-\begin{equation} \label{AssumedAnalyticForm}
-\begin{split}
- u(r,t) - u_a = T(t) \frac{u_h(r)}{r} + \frac{u_p(r)}{r} 
-\\
- \dot{u}(r,t)  = \dot{T}(t) \frac{u_h(r)}{r}
-\\
- \Delta u(r,t)  = T(t) \frac{u_h''(r)}{r }+ \frac{u_p''(r)}{r} 
-\end{split}
-\end{equation}
-Substituting \eqn{AssumedAnalyticForm} in \eqn{BioheatPDE}
-\[
-  \frac{1}{\alpha}
-  \dot{T}(t) \frac{u_h(r)}{r}
- -
- T(t) \frac{u_h''(r)}{r }
- + \frac{\omega c_\text{blood}}{k} 
-  T(t) \frac{u_h(r)}{r} 
- = 0
-\]
-Following the classical separation of variable approach
-\[
-  \frac{\dot{T}(t)}{\alpha T(t)}
-   =
-  \frac{u_h''(r)
-       - \frac{\omega c_\text{blood}}{k} u_h(r) 
-       }{u_h(r) }
-   =
-   - \lambda
-\]
-yeilds two ODE's.
-\[
-  \dot{T}(t)+ \lambda \alpha T(t)  = 0 
-   \qquad \Rightarrow \qquad
-   T(t)  = C_0 \exp\left( -\lambda \alpha t \right)
+ u(r,t) = u_a + \frac{\alpha}{k\; \gamma^2} q \left( 1 - \exp(-\gamma^2 t)\right)
+ \qquad
+  \gamma^2 = \frac{\omega c_\text{blood}}{\rho c_p}
+ \quad
+  \alpha  = \frac{k}{\rho c_p}
 \]
 \[
-  u_h''(r) + ( \lambda - \frac{\omega c_\text{blood}}{k} )  u_h(r)  = 0 
-   \qquad \Rightarrow \qquad
-  u_h(r)   = C_1 \sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r
-           + C_2 \cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r
+ u(r,0) = u_a 
+ \qquad
+ \frac{\partial u}{\partial r} = 0 
+\]
+This may be verified through direct substitution into the bioheat equation.
+\[
+ \underbrace{\frac{\alpha}{k\; } q  \exp(-\gamma^2 t)}_{\dot{u} }
+ -  \alpha  \cdot
+\underbrace{ 0}_{\Delta u }
+ + 
+\underbrace{ 
+  \frac{\omega c_\textit{blood}}{\rho c_p} 
+  }_{\gamma^2 }
+  \left(
+ \underbrace{
+  \frac{\alpha}{k\; \gamma^2} q \left( 1 - \exp(-\gamma^2 t)\right)
+   }_{u  - u_a }
+   \right)
+  = 
+ \frac{\alpha}{k\; } q  \exp(-\gamma^2 t)
+  +
+ \frac{\alpha}{k\; } q 
+      \left( 1 - \exp(-\gamma^2 t)\right)
+  = 
+ \frac{1}{\rho c_p } q 
 \]
 
-The initial conditions and boundary conditions are used to determine the coefficients of the homogenious solution.
-Applicator cooling is specified by the boundary condition at $r = r_1$.
-The domain is assumed large enough that no heat flux is observed at the far boundary $r = r_2$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Approximate Solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Consider an approximated solution as the tensor product of the steady state
+and spatially invariant solution.
+\begin{equation} \label{AssumedAnalyticForm}
+\begin{split}
+ u(r,t) - u_a = 
+ \frac{u_h(r)}{r} +
+ \frac{u_p(r)}{r}
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+\\
+ \dot{u}(r,t)  =  
+ \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+\\
+ \Delta u(r,t)  = 
+ \frac{u_h''(r)}{r} 
+ +
+ \frac{u_p''(r)}{r} 
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+\end{split}
+\end{equation}
+
+Notice this does not satisfy the bioheat equation.
 \[
- u(r,0) - u_a = T(0) \frac{u_h(r)}{r} + \frac{u_p(r)}{r}  = u_0
+\begin{split}
+  \partial u_t   
+ - \alpha \Delta u   
+ +  \gamma^2 (u  - u_a )
+  = 
+  \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+ & - 
+  \alpha
+  \left(
+ \frac{u_p''(r)}{r} 
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+  \right)
+  + 
+  \gamma^2
+  \left(
+  \frac{u_p(r)}{r} 
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+  \right)
+\\
+  = 
+   \frac{u_p(r)}{r}  \exp(-\gamma^2 t)
+ &+
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+ \underbrace{q_\text{laser}}_{
+  -\alpha \frac{u_p''(r)}{r} 
+  + \gamma^2
+  \frac{u_p(r)}{r} 
+  }
+  +
+ \underbrace{0}_{
+  -\alpha \frac{u_h''(r)}{r} 
+  + \gamma^2
+  \frac{u_h(r)}{r} 
+  }
+\end{split}
+\]
+
+
+Coefficients of the homogeneous solution $C_1(t)$ and $C_2(t)$ also must vary with
+time to satisty the boundary conditions
+\[
+ u(r_1,t) = u_0
+  \qquad
+ \left. \frac{d u}{dr} \right|_{r_2}  = 0
 \]
 \[
-T(t)
 \begin{bmatrix}
-  \left.
-   \frac{d}{dr}
-    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
-  \right|_{r_1}
-    - \frac{h}{k} 
-    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   & 
-  \left.
-   \frac{d}{dr}
-    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
-  \right|_{r_1}
-    - \frac{h}{k} 
-    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   \\
   \left.
    \frac{d}{dr}
-    \frac{\sin \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+    \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
   \right|_{r_2}
   & 
   \left.
    \frac{d}{dr}
-    \frac{\cos \sqrt{ \lambda - \frac{\omega c_\text{blood}}{k} } r}{r}  
+    \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
   \right|_{r_2}
-  \\
 \end{bmatrix}
 \begin{bmatrix}
-  C_1 \\
-  C_2 \\
+  C_1(t) \\
+  C_2(t) \\
 \end{bmatrix}
 = 
 \begin{bmatrix}
-  \frac{h}{k} (u_p(r_1) - u_a  - u_\infty)       
+      u_0 - u_a - u_p(r_1)  
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+   \\
   - \left. \frac{d u_p}{dr} 
-  \right|_{r_1}\\
-  - \left. \frac{d u_p}{dr} 
-  \right|_{r_2}\\
+  \right|_{r_2}
+ \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+\\
 \end{bmatrix}
 \]
-{\color{red} The time function $T(t)$ is differenct than the classical
-approach. In this case the coefficients $C_1(t)$ and $C_2(t)$ depend on
-time.} 
-Heating caused by the cylindrical geometry of the diffusing tip was modeled as
-evenly distributed point sources, $N=10$, along the axial dimension of the
-applicator at positions $r_{0_i}$. 
-\begin{equation}\label{GreenSuperPosition}
-  u = \sum_{i=1}^N u_h( r-r_{0_i}) + u_p( r-r_{0_i})
-\end{equation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{PC Expansion Selection }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
