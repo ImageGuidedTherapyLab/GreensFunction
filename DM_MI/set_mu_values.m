@@ -3,7 +3,7 @@ function [ all_opt_fig, no_pwr_fig, sim_dim, summary ] = set_mu_values ( max_phy
 % Make the LOOCV iteration system
 
 %path_base = strcat ( 'workdir/',Study_paths{1,1}, '/', Study_paths{1,2}, '/opt');
-load( '/optpp_pds.bestfit50.in.1.mat');
+load( 'DM_MI/optpp_pds.bestfit50.in.1.mat');
 mu = str2num( inputdatavars.cv.mu_eff_healthy );
 kk = inputdatavars.cv.k_0;
 ww = inputdatavars.cv.w_0;

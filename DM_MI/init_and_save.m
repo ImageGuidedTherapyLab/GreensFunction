@@ -30,7 +30,7 @@ max_phys_sz = [FOV(1), min_space, min_space, num_pix(1); FOV(2), min_space, min_
 % input_path{1,2} = Study_paths{1,2};
 [ all_opt_fig, no_pwr_fig,sim_dim, summary ] = set_mu_values ( max_phys_sz, choice );
 
-cd /mnt/FUS4/data2/sjfahrenholtz/MATLAB/Tests/direct_search/libraries
+%cd /mnt/FUS4/data2/sjfahrenholtz/MATLAB/Tests/direct_search/libraries
 
 if choice == 1
     
@@ -54,5 +54,5 @@ elseif choice ==5
     
     save ('rand_opt_perf_mu222222.mat', 'all_opt_fig','no_pwr_fig','sim_dim','summary','-v7.3');
 end
-cd /mnt/FUS4/data2/sjfahrenholtz/gitMATLAB/opt_new_database/PlanningValidation
+%cd /mnt/FUS4/data2/sjfahrenholtz/gitMATLAB/opt_new_database/PlanningValidation
 end

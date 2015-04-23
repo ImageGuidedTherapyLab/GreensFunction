@@ -1,7 +1,7 @@
 % Script to create temperature fields for Drew Mitchell's MI work.
 
 choice = 1;
-power_log=12;
+power_log=12;  %watt of power
 
 init_and_save(choice);
 

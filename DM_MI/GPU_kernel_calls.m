@@ -117,6 +117,7 @@ yloc = yloc + (spacingY * npixely / 2);
 
 %% initialize data arrays
 % initialize on host and perform ONE transfer from host to device
+npixelz=5;
 h_temperature     = zeros(npixelx,npixely,npixelz);
 d_temperature  = gpuArray( h_temperature  );
 
