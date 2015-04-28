@@ -109,8 +109,7 @@ spherical coordinates.
    -
     \frac{\alpha }{r}   \frac{d^2 \mathcal{R}}{dr^2}
    = 
-    \frac{\mu_\textit{eff}^2 \;  P}{ \; \rho c_p}   
-    \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
+    \frac{1}{ \rho c_p} q_\textit{laser}  
 \]
 
 \[
@@ -132,13 +131,13 @@ simplifies the analysis of the differential operator in spherical coordinates.
 A particular solution, $u_p$, will be used to construct a solution. 
 \[
  -\Delta  \frac{u_p(r)}{r} 
- + \frac{\omega c_\text{blood}}{k}  \frac{u_p(r)}{r} 
- = \frac{1}{k} \; q_{laser}
+ + \frac{\omega c_\textit{blood}}{k}  \frac{u_p(r)}{r} 
+ = \frac{1}{k} \; q_\textit{laser}
 \qquad
 \qquad
   \frac{u_p(r)}{r}  = 
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
 \]
 Notice that in spherical coordinates
 \[
@@ -228,12 +227,12 @@ applicator at positions $r_{0_i}$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The sensitivity of the solution to the optical properties, $\frac{\partial
-u}{\partial \mu_\text{eff}}$ is also of
+u}{\partial \mu_\textit{eff}}$ is also of
 interest.
 Sensitivities are obtained through chain rule differentiation of the governing
 PDE.
 \[
-\frac{\partial}{\partial \mu_\text{eff}}
+\frac{\partial}{\partial \mu_\textit{eff}}
 \left[
  -\nabla \cdot \left(   \alpha \nabla u  \right) 
  + \frac{\omega c_\textit{blood}}{\rho c_p} (u  - u_a )
@@ -242,32 +241,32 @@ PDE.
 \qquad
 \Rightarrow
 \qquad
- -\nabla \cdot  \left(   \alpha \nabla  \frac{\partial u}{\partial \mu_\text{eff}} \right) 
- + \frac{\omega c_\textit{blood}}{\rho c_p} \frac{\partial u}{\partial \mu_\text{eff}}  
+ -\nabla \cdot  \left(   \alpha \nabla  \frac{\partial u}{\partial \mu_\textit{eff}} \right) 
+ + \frac{\omega c_\textit{blood}}{\rho c_p} \frac{\partial u}{\partial \mu_\textit{eff}}  
  = \frac{1}{\rho c_p} \;
-   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
+   \frac{\partial q_{laser}}{\partial \mu_\textit{eff}}
 \]
 Assuming constant coefficients, 
 a 1D spherically symmetric radial decomposition 
 of the solution,
-$ \frac{\partial u}{\partial \mu_\text{eff}} = \frac{\mathcal{R}(r)}{r}$, again simplifies the analysis of the differential operator in
+$ \frac{\partial u}{\partial \mu_\textit{eff}} = \frac{\mathcal{R}(r)}{r}$, again simplifies the analysis of the differential operator in
 spherical coordinates.
 \[
-   L \left[\frac{\partial u}{\partial \mu_\text{eff}}\right] = 
+   L \left[\frac{\partial u}{\partial \mu_\textit{eff}}\right] = 
     \omega c_\textit{blood}  \frac{ \mathcal{R}(r)}{r} 
    -
     \frac{k }{r}   \frac{d^2 \mathcal{R}}{dr^2}
    = 
-   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
+   \frac{\partial q_{laser}}{\partial \mu_\textit{eff}}
 \]
 \[
  \left.
- \frac{\partial u}{\partial \mu_\text{eff}} 
+ \frac{\partial u}{\partial \mu_\textit{eff}} 
   \right|_{r_1}
   = 
- \frac{\partial u_0}{\partial \mu_\text{eff}} = 0
+ \frac{\partial u_0}{\partial \mu_\textit{eff}} = 0
   \qquad
-  \left. \frac{\partial }{\partial \mu_\text{eff}}
+  \left. \frac{\partial }{\partial \mu_\textit{eff}}
    \frac{d u}{dr} \right|_{r_2}  = 0
   \qquad
    r_1 < r_2
@@ -276,7 +275,7 @@ From classical theory~\cite{boyce1992elementary},
 the general solution is the linear combination of the homogeneous solution and
 a particular solution. 
 \[
- \frac{\partial u}{\partial \mu_\text{eff}} = 
+ \frac{\partial u}{\partial \mu_\textit{eff}} = 
   \frac{1}{r}
    \left(
   u_h(r)+ 
@@ -292,7 +291,7 @@ We will construct a solution using the linearity of the operator, $L$.
   L \left[\frac{u_h}{r} \right] =  0 
   \qquad
   L \left[\frac{u_p}{r} \right] =  
-   \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
+   \frac{\partial q_{laser}}{\partial \mu_\textit{eff}}
  %% L \left[\frac{u_{p_1}}{r} \right] = 
  %%   \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{  r}
  %% \qquad
@@ -344,32 +343,32 @@ The particular solution, $u_p$, may be obtained from the previous particular
 solution found in Equation~\eqn{OneDSolution}.
 \[
   L \left[
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
     \right] =q_{laser} 
 \]
 Fubini theorem is used to interchange order of differentiation.
 \[
 \begin{split}
-    \frac{\partial }{\partial \mu_\text{eff}}
+    \frac{\partial }{\partial \mu_\textit{eff}}
   L \left[
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
     \right] 
   & \underbrace{
    = 
   }_\text{Fubini}
   L \left[
-    \frac{\partial }{\partial \mu_\text{eff}}
+    \frac{\partial }{\partial \mu_\textit{eff}}
    \left(
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
    \right)
    \right] 
 \\
   &  =
-    \frac{\partial q_{laser}}{\partial \mu_\text{eff}}
-    = \frac{\partial }{\partial \mu_\text{eff}}
+    \frac{\partial q_{laser}}{\partial \mu_\textit{eff}}
+    = \frac{\partial }{\partial \mu_\textit{eff}}
    \left(
     \mu_\textit{eff}^2 \;  P
     \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
@@ -392,10 +391,10 @@ Fubini theorem is used to interchange order of differentiation.
 \]
 \[
   \frac{u_p(r)}{r} = 
-    \frac{\partial }{\partial \mu_\text{eff}}
+    \frac{\partial }{\partial \mu_\textit{eff}}
    \left(
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\text{blood}-k \; \mu_\text{eff}^2 \right)} 
+    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
    \right)
    = \text{\color{red}?}
 \]
