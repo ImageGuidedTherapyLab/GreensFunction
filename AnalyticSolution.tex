@@ -112,6 +112,13 @@ spherical coordinates.
     \frac{\mu_\textit{eff}^2 \;  P}{ \; \rho c_p}   
     \frac{ \exp \left(-\mu_\textit{eff} \; r \right) }{ 4 \; \pi \; r}
 \]
+
+\[
+	q_\textit{laser} 
+	=
+	\frac{\mu_\textit{eff}^2 \exp \left(-\mu_\textit{eff} \; r \right) } {4 \; \pi \; r }
+\]
+
 \[
    u(r_1) = u_0
   \qquad
@@ -119,7 +126,7 @@ spherical coordinates.
   \qquad
    r_1 < r_2
 \]
-Constant coeffients are assumed. A 1D spherically symmetric radial decomposition 
+Constant coefficients are assumed. A 1D spherically symmetric radial decomposition 
 of the solution
 simplifies the analysis of the differential operator in spherical coordinates.
 A particular solution, $u_p$, will be used to construct a solution. 
@@ -165,12 +172,12 @@ u =
     C_1 \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
   + 
     C_2 \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
-    }_{u_h}
+    }_{u_h / r}
   + 
   \underbrace{
     \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
          { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
-    }_{u_p}
+    }_{u_p / r}
   + 
     u_a
 \end{equation}
@@ -207,7 +214,7 @@ The domain is assumed large enough that no heat flux is observed at the far boun
 The 1D solution provides an estimate of the heating from a single point source
 with applicator boundary at $r_1$. Mathematica 7 (Wolfram, Champaign, IL) was used
 to determine and verify all coefficients. Then, \verb#ccode# was used to write out the kernel.
-Similar analytical solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
+Similar analytic solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
 %FIXME \text{ \color{red} (Do we get the same result ?) } 
 Heating caused by the cylindrical geometry of the diffusing tip was modeled as
 evenly distributed point sources, $M = 10$, along the axial dimension of the
@@ -575,7 +582,7 @@ time to satisty the boundary conditions
 \end{bmatrix}
 \]
 For the particular case, $u_0=u_a$, the boundary conditions are naturally
-satisfied and indepdendent of time.
+satisfied and independent of time.
 \[
 u_0=u_a \qquad \Rightarrow \qquad
 \begin{bmatrix}
@@ -791,7 +798,7 @@ L u_k = \epsilon_k  = \delta(x - x_k)
 u_k = G(x,x_k)
 \]
 Under these assumptions,
-an analytical form for the mean and covariance may be derived
+an analytic form for the mean and covariance may be derived
 (See Rasmussen 2006, eqn 4.13).
 \begin{equation} \label{PhysicsBasedCovarianceFunction}
 m(x) = \int_0^t \int_D \Phi(x-y,t-s) Q_\text{laser}(y,s) dy ds
