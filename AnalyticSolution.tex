@@ -140,7 +140,7 @@ A particular solution, $u_p$, will be used to construct a solution.
 \qquad
 \qquad
   \frac{u_p(r)}{r}  = 
-    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\text{eff} \; r \right) }
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
          { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
 \]
 Notice that in spherical coordinates
@@ -193,6 +193,7 @@ The domain is assumed large enough that no heat flux is observed at the far boun
   & 
     \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   \\
+  \\
   \left.
    \frac{d}{dr}
     \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
@@ -205,11 +206,13 @@ The domain is assumed large enough that no heat flux is observed at the far boun
 \end{bmatrix}
 \begin{bmatrix}
   C_1 \\
+  \\
   C_2 \\
 \end{bmatrix}
 = 
 \begin{bmatrix}
-      u_0 - u_p(r_1) - u_a    \\
+      u_0 - \frac{u_p(r_1)}{r} - u_a    \\
+      \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}\\
 \end{bmatrix}
@@ -397,10 +400,13 @@ Fubini theorem is used to interchange order of differentiation.
   \frac{u_p(r)}{r} = 
     \frac{\partial }{\partial \mu_\textit{eff}}
    \left(
-    \frac{\mu_\text{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
-         { 4 \; \pi \; r \; \left(\omega c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
+    \frac{\mu_\textit{eff}^2 \; P \; \exp \left(-\mu_\textit{eff} \; r \right) }
+         { 4 \; \pi \; r \; \left(\omega \ c_\textit{blood}-k \; \mu_\textit{eff}^2 \right)} 
    \right)
-   = \text{\color{red}?}
+   = \frac{ \mu_\textit{eff} \ P \left(k \ \mu_\textit{eff}^3 
+   \ r + c_\textit{blood} \left(2-\mu_\textit{eff} \ r \right) \omega \right) \exp \left(-\mu_\textit{eff} \;
+   r \right) }{ 4 \; \pi \; r \; \left(\omega \ c_\textit{blood}-k 
+   \; \mu_\textit{eff}^2 \right) }
 \]
 % \frac{\partial u}{\partial \mu_\text{eff}}  
 As before, the homogeneous coefficients, $C_1$ and $C_2$, must be determined from the 
@@ -420,6 +426,7 @@ boundary conditions.
   & 
     \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   \\
+  \\
   \left.
    \frac{d}{dr}
     \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
@@ -432,11 +439,13 @@ boundary conditions.
 \end{bmatrix}
 \begin{bmatrix}
   C_1 \\
+  \\
   C_2 \\
 \end{bmatrix}
 = 
 \begin{bmatrix}
-       - u_p(r_1)     \\
+       \frac{- u_p(r_1)}{r}     \\
+       \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}\\
 \end{bmatrix}
@@ -450,7 +459,7 @@ solution of \cite{Giordano2010}.
 \[
  u(r,t) = u_a + \frac{\alpha}{k\; \gamma^2} q \left( 1 - \exp(-\gamma^2 t)\right)
  \qquad
-  \gamma^2 = \frac{\omega c_\text{blood}}{\rho c_p}
+  \gamma^2 = \frac{\omega c_\textit{blood}}{\rho c_p}
  \quad
   \alpha  = \frac{k}{\rho c_p}
 \]
@@ -535,7 +544,7 @@ Notice this does not satisfy the bioheat equation.
    \frac{u_{SS}(r)}{r}  \exp(-\gamma^2 t)
  &+
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
- \underbrace{q_\text{laser}}_{
+ \underbrace{q_\textit{laser}}_{
   -\alpha \frac{u_{SS}''(r)}{r} 
   + \gamma^2
   \frac{u_{SS}(r)}{r} 
@@ -558,6 +567,7 @@ time to satisty the boundary conditions
   & 
     \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   \\
+  \\
   \left.
    \frac{d}{dr}
     \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
@@ -570,6 +580,7 @@ time to satisty the boundary conditions
 \end{bmatrix}
 \begin{bmatrix}
   C_1(t) \\
+  \\
   C_2(t) \\
 \end{bmatrix}
 = 
@@ -577,6 +588,7 @@ time to satisty the boundary conditions
 \begin{bmatrix}
       u_0 - u_a - u_p(r_1)  
  \frac{\left( 1 - \exp(-\gamma^2 t)\right)}{ \gamma^2}  
+   \\
    \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}
@@ -593,6 +605,7 @@ u_0=u_a \qquad \Rightarrow \qquad
   & 
     \frac{\exp\left(-\sqrt{\frac{\omega c_\textit{blood}}{k}} \; r_1 \right)}{r_1}  
   \\
+  \\
   \left.
    \frac{d}{dr}
     \frac{\exp\left( \sqrt{\frac{\omega c_\textit{blood}}{k}} \; r \right)}{r}  
@@ -605,11 +618,13 @@ u_0=u_a \qquad \Rightarrow \qquad
 \end{bmatrix}
 \begin{bmatrix}
   C_1 \\
+  \\
   C_2 \\
 \end{bmatrix}
 = 
 \begin{bmatrix}
       - u_p(r_1)  
+   \\
    \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}
