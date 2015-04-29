@@ -88,7 +88,7 @@ interaction.
 n \cdot ( \alpha \nabla u  )  = 0 
                        \qquad \text{on } \partial U
 \qquad
-n \cdot ( \alpha \nabla u  )  = h (u - u_\textit{cooling}) 
+n \cdot ( \alpha \nabla u  )  = h (u - u_0) 
                        \qquad \text{on } \partial U_\textit{tip}
 \]
 
@@ -211,7 +211,7 @@ The domain is assumed large enough that no heat flux is observed at the far boun
 \end{bmatrix}
 = 
 \begin{bmatrix}
-      u_0 - \frac{u_p(r_1)}{r} - u_a    \\
+      u_0 - \frac{u_p(r_1)}{r_1} - u_a    \\
       \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}\\
@@ -223,10 +223,10 @@ to determine and verify all coefficients. Then, \verb#ccode# was used to write o
 Similar analytic solutions are provided in \cite{Giordano2010,Vyas1992,Deng2002}.
 %FIXME \text{ \color{red} (Do we get the same result ?) } 
 Heating caused by the cylindrical geometry of the diffusing tip was modeled as
-evenly distributed point sources, $M = 10$, along the axial dimension of the
+evenly distributed point sources, $M = 50$, along the axial dimension of the
 applicator at positions $r_{0_i}$. 
 \begin{equation}\label{GreenSuperPosition}
-  u = \sum_{i=1}^M u_h( r-r_{0_i}) + u_p( r-r_{0_i})
+  u = \sum_{i=1}^M u_h( r-r_{0_i}) + u_p( r-r_{0_i}) + u_a
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -444,7 +444,7 @@ boundary conditions.
 \end{bmatrix}
 = 
 \begin{bmatrix}
-       \frac{- u_p(r_1)}{r}     \\
+       \frac{- u_p(r_1)}{r_1}     \\
        \\
   - \left. \frac{d u_p}{dr} 
   \right|_{r_2}\\
@@ -457,7 +457,7 @@ boundary conditions.
 An approximate transient solution, consider the spatially independent
 solution of \cite{Giordano2010}.
 \[
- u(r,t) = u_a + \frac{\alpha}{k\; \gamma^2} q \left( 1 - \exp(-\gamma^2 t)\right)
+ u(r,t) = u_a + \frac{\alpha}{k\; \gamma^2} q_\textit{laser} \left( 1 - \exp(-\gamma^2 t)\right)
  \qquad
   \gamma^2 = \frac{\omega c_\textit{blood}}{\rho c_p}
  \quad
@@ -470,7 +470,7 @@ solution of \cite{Giordano2010}.
 \]
 This may be verified through direct substitution into the bioheat equation.
 \[
- \underbrace{\frac{\alpha}{k\; } q  \exp(-\gamma^2 t)}_{\dot{u} }
+ \underbrace{\frac{\alpha}{k\; } q_\textit{laser}  \exp(-\gamma^2 t)}_{\frac{\partial u}{\partial t} }
  -  \alpha  \cdot
 \underbrace{ 0}_{\Delta u }
  + 
@@ -479,16 +479,16 @@ This may be verified through direct substitution into the bioheat equation.
   }_{\gamma^2 }
   \left(
  \underbrace{
-  \frac{\alpha}{k\; \gamma^2} q \left( 1 - \exp(-\gamma^2 t)\right)
+  \frac{\alpha}{k\; \gamma^2} q_\textit{laser} \left( 1 - \exp(-\gamma^2 t)\right)
    }_{u  - u_a }
    \right)
   = 
- \frac{\alpha}{k\; } q  \exp(-\gamma^2 t)
+ \frac{\alpha}{k\; } q_\textit{laser}  \exp(-\gamma^2 t)
   +
- \frac{\alpha}{k\; } q 
+ \frac{\alpha}{k\; } q_\textit{laser} 
       \left( 1 - \exp(-\gamma^2 t)\right)
   = 
- \frac{1}{\rho c_p } q 
+ \frac{1}{\rho c_p } q _\textit{laser}
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -873,7 +873,7 @@ q_0
 \]
 The approximate residual is bounded by
 \[
-   \|r(u_0) - r(u)\|  \quad < \quad  ???
+   \|r(u_0) - r(u)\|  \quad < \quad  {\color{red}???}
 \]
 Four linear system solves are needed
 \[
