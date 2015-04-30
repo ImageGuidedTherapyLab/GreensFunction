@@ -1,7 +1,7 @@
 % This is the updated Bioheat_script that should be used with DF's DAKOTA
 % run. The metric is based on temperature (not dose and isotherms).
 
-function [all_opt_fig, no_pwr_fig,sim_dim] = make_0W_1W_fields ( inputdatavars, sources, max_phys_sz, mu_eff_list, w_perf, k_cond, choice );
+function [all_opt_fig, no_pwr_fig,sim_dim] = make_0W_1W_fields ( inputdatavars, sources, max_phys_sz, mu_eff_list, w_perf, k_cond, choice )
 % % Record the working directory
 % setenv ( 'PATH22' , pwd);
 % path22 = getenv ( 'PATH22' );

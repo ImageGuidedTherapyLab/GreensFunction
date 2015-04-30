@@ -130,6 +130,8 @@ clear diff
 % VOI.z = inputdatavars.voi(5:6);
 
 % Make the correct power
+n_length = size(all_opt_fig);
+n_length=n_length(end);
 if choice == 1
 
     no_pwr = repmat(no_pwr_fig,[1 1 n_length]);
@@ -172,7 +174,7 @@ modFOV_l(2) = sim_dim.spacing.y .*sim_dim.mod_point.y .*sim_dim.mod_point.z_subs
 
 % Do interpolation
 n_model = size( model_temp,3);
-model_crop = zeros( (inputdatavars.voi(4)-inputdatavars.voi(3)+1), (inputdatavars.voi(2)-inputdatavars.voi(1)+1), n_model);
+model_crop = zeros(size(MRXq,1),size(MRXq,2));
 for ii = 1:n_model
     model_crop(:,:,ii) = interp2( modX, modY, model_temp(:,:,ii), MRXq, MRYq);
 end

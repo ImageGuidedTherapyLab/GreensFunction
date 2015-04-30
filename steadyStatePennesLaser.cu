@@ -45,13 +45,13 @@ void steadyStatePennesLaser(
          double const InitialTemperature,
          double const ArterialTemperature,
          double const SpecificHeatBlood ,
-               double* d_TemperatureArray,
          double const  SpacingX,
          double const  SpacingY,
          double const  SpacingZ,
          int const NpixelX,
          int const NpixelY,
-         int const NpixelZ)
+         int const NpixelZ),
+         double* d_TemperatureArray
 {
     /*
       grid stride loop design pattern, 1-d grid
