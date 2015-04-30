@@ -124,8 +124,8 @@ d_temperature  = gpuArray( h_temperature  );
 %% Compile and setup thread grid
 % grid stride loop design pattern, 1-d grid
 % http://devblogs.nvidia.com/parallelforall/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/
-%ssptx = parallel.gpu.CUDAKernel('steadyStatePennesLaser.ptx', 'steadyStatePennesLaser.cu');
-ssptx = parallel.gpu.CUDAKernel('SS_cuda1.ptx', 'SS_cuda1.cu');
+ssptx = parallel.gpu.CUDAKernel('steadyStatePennesLaser.ptx', 'steadyStatePennesLaser.cu');
+%ssptx = parallel.gpu.CUDAKernel('SS_cuda1.ptx', 'SS_cuda1.cu');
 threadsPerBlock = 256;
 ssptx.ThreadBlockSize=[threadsPerBlock  1];
 ssptx.GridSize=[numSMs*32               1];
@@ -148,8 +148,8 @@ Temp = zeros(npixelx,npixely,Numruns);
 if choice ==1       % mu
     
     for ii = 1:Numruns
-        %ssptx = parallel.gpu.CUDAKernel('steadyStatePennesLaser.ptx', 'steadyStatePennesLaser.cu');
-        ssptx = parallel.gpu.CUDAKernel('SS_cuda1.ptx', 'SS_cuda1.cu');
+        ssptx = parallel.gpu.CUDAKernel('steadyStatePennesLaser.ptx', 'steadyStatePennesLaser.cu');
+        %ssptx = parallel.gpu.CUDAKernel('SS_cuda1.ptx', 'SS_cuda1.cu');
         threadsPerBlock = 256;
         ssptx.ThreadBlockSize=[threadsPerBlock  1];
         ssptx.GridSize=[numSMs*32               1];
