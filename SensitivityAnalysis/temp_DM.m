@@ -1,0 +1,7 @@
+%void pointSource(double rVar, double r1, double r2, double wPerf, double cblood, double kCond, double mueff, double u0, double ua, double Power, double *temperature )
+function [temperature] = temp_DM(wPerf,cblood,kCond,mueff,Power,r1,r2,rVar)
+
+u0 = 21;
+ua = 0;
+
+temperature=ua-(exp(-mueff*rVar)*mueff^2*Power)/(4*kCond*mueff^2*pi*rVar-4*cblood*pi*rVar*wPerf)+(exp(-mueff*(r1+rVar)+(r1+r2-rVar)*sqrt((cblood*wPerf)/kCond))*(exp(r1*(mueff+sqrt((cblood*wPerf)/kCond)))*mueff^2*Power*r2^2*(1+mueff*rVar)-exp(mueff*rVar+r2*sqrt((cblood*wPerf)/kCond))*mueff^2*Power*rVar^2*(-1+r2*sqrt((cblood*wPerf)/kCond))+4*exp(mueff*(r1+rVar)+r2*sqrt((cblood*wPerf)/kCond))*pi*r1*rVar^2*(u0-ua)*(-kCond*mueff^2+cblood*wPerf)*(-1+r2*sqrt((cblood*wPerf)/kCond))))/(4*pi*rVar^3*(-kCond*mueff^2+cblood*wPerf)*(exp(2*r2*sqrt((cblood*wPerf)/kCond))*(-1+r2*sqrt((cblood*wPerf)/kCond))+exp(2*r1*sqrt((cblood*wPerf)/kCond))*(1+r2*sqrt((cblood*wPerf)/kCond))))+(exp(-mueff*(r1+rVar)+(2*r1+rVar)*sqrt((cblood*wPerf)/kCond))*(-exp(mueff*r1+r2*sqrt((cblood*wPerf)/kCond))*mueff^2*Power*r2^2*(1+mueff*rVar)-exp(mueff*rVar+r1*sqrt((cblood*wPerf)/kCond))*mueff^2*Power*rVar^2*(1+r2*sqrt((cblood*wPerf)/kCond))-4*exp(mueff*(r1+rVar)+r1*sqrt((cblood*wPerf)/kCond))*pi*r1*rVar^2*(u0-ua)*(kCond*mueff^2-cblood*wPerf)*(1+r2*sqrt((cblood*wPerf)/kCond))))/(4*pi*r1^2*rVar^3*(-kCond*mueff^2+cblood*wPerf)*(exp(2*r2*sqrt((cblood*wPerf)/kCond))*(-1+r2*sqrt((cblood*wPerf)/kCond))+exp(2*r1*sqrt((cblood*wPerf)/kCond))*(1+r2*sqrt((cblood*wPerf)/kCond))));
