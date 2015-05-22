@@ -1,9 +1,9 @@
-function [ all_opt_fig, all_opt_fig_s, no_pwr_fig, no_pwr_fig_s, sim_dim, summary ] = set_mu_values_DM ( max_phys_sz, choice );
+function [ all_opt_fig, all_opt_fig_s, no_pwr_fig, no_pwr_fig_s, sim_dim, summary ] = set_mu_values_DM ( max_phys_sz, choice )
 
 % Make the LOOCV iteration system
 
 %path_base = strcat ( 'workdir/',Study_paths{1,1}, '/', Study_paths{1,2}, '/opt');
-load( 'DM_MI/optpp_pds.bestfit50.in.1.mat');
+load( 'SensitivityAnalysis/optpp_pds.bestfit50.in.1.mat');
 mu = str2num( inputdatavars.cv.mu_eff_healthy );
 kk = inputdatavars.cv.k_0;
 ww = inputdatavars.cv.w_0;
@@ -12,7 +12,7 @@ ww = inputdatavars.cv.w_0;
 if choice ==1   % Mu
     %mu_eff(1) = 0.008;
     % mu_eff(2:101) = linspace(101,200,100);
-    mu_eff=[200 300 400 500 600 700];
+    mu_eff=[200 201 220 230 240 250];
     %mu_eff(2:1001) = linspace(1,1000,1000);
     %mu_eff=180;
     %mu_eff(2:301) = linspace(1,300,300);
