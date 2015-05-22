@@ -10,9 +10,9 @@ sigma_mu=0.001;
 
 M(1:ndim,1:ndim)=1;
 %T2star=[10,70,100,80];
-T2star(1:ndim,1:ndim) = 100;
+T2star(1:ndim,1:ndim) = 0.1;
 delta_omega0=0;
-T_E=25;
+T_E=0.025;
 gamma=42.58;
 alpha=-0.0102;
 B_0=1.5;

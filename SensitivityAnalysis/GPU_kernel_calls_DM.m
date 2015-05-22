@@ -163,7 +163,7 @@ if choice ==1       % mu
         end
         %%  transfer device to host
         %         keyboard
-        [d_temperature] = feval(ssptx,ntissue,materialID,perfusion,conduction, mu_eff(ii,:), R1, R2, nsource, power ,xloc,yloc,zloc, u0 ,u_artery , c_blood, spacingX,spacingY,spacingZ,npixelx,npixely,npixelz,d_temperature,d_sensitivity);
+        [d_temperature,d_sensitivity] = feval(ssptx,ntissue,materialID,perfusion,conduction, mu_eff(ii,:), R1, R2, nsource, power ,xloc,yloc,zloc, u0 ,u_artery , c_blood, spacingX,spacingY,spacingZ,npixelx,npixely,npixelz,d_temperature,d_sensitivity);
         tmp = gather( d_temperature );
         sen = gather( d_sensitivity );
         
